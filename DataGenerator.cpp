@@ -6,41 +6,50 @@ using namespace std;
 typedef long long ll;
 
 
-template<class _Ty = ll>
-class JiLei
-{
-public:
-	Range<>p1, p2;
-	JiLei(Range<>p1 = Range<>(), Range<>p2 = Range<>()) :p1(p1), p2(p2) {}
-};
-
-template<class _Ty = ll>
-class C:public JiLei<>
-{
-public:
-	Range<>p3;
-	explicit C(Range<> p1 = Range<>(), Range<> p2 = Range<>(), Range<> p3 = Range<>()) :JiLei<>(p1, p2) , p3(p3) {}
-};
-
-
-template<>
-class C<char>
-{
-public:
-	Range<>p3;
-	C(Range<>p1 = Range<>(), Range<>p2 = Range<>(), Range<>p3 = Range<>())
-		:p3(p3){}
-};
-
-int x(int a =2)
-{
-	return a;
-}
-
 int main() {
-	//output:2
-	cout << x();
-	//output:5
-	cout << x(5);
+
+	cout << "Number Test" << endl;
+	cout << "=================================================" << endl;
+	
+	DataGenerator<ll> random_number;
+	
+	cout << "A random number: " << random_number.get_data() << endl;
+	
+	cout << "An array random number:" << endl;
+	random_number.set_data_col_range_(Range<>(20, 50));
+	vector <ll> arr1 = random_number.get_data();
+	for(vector<ll>::iterator vit=arr1.begin();vit!=arr1.end();vit++){
+		cout << *vit << ' ';
+	}
+	cout << endl;
+
+	cout << "A two-dimension random number:" << endl;
+	random_number.set_data_row_range_(random_number.get_data_col_range_());
+	vector <vector<ll>>arr2 = random_number.get_data();
+	for(vector<vector<ll>>::iterator vit=arr2.begin();vit!=arr2.end();vit++){
+		for(vector<ll>::iterator vit2=vit->begin();vit2!=vit->end();vit++){
+			cout << *vit2 << ' ';
+		}
+		cout << endl;
+	}
+	cout << endl;
+
+	
+	cout << "String Test" << endl;
+	cout << "=================================================" << endl;
+
+	DataGenerator<char>random_string;
+
+	cout << "A random char(lowercase): " << random_string.get_data() << endl;
+
+	random_string.set_data_length_range_(Range<>(10, 30));
+	cout << "A random string(lowercase): " << random_string.get_data() << endl;
+
+	random_string.set_string_number_range_(random_string.get_data_length_range_());
+	vector<string> arr3 = random_string.get_data();
+	for(vector<string>::iterator vit=arr3.begin();vit!=arr3.end();vit++){
+		cout << *vit << endl;
+	}
+	
 	return 0;
 }
