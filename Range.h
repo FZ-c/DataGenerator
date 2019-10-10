@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <random>
 
 typedef long long ll;
 
@@ -26,6 +27,10 @@ public:
 		return Range<_Ty2>(static_cast<_Ty2>(min_), static_cast<_Ty2>(max_));
 	}
 
+	operator std::uniform_int_distribution<ll>::param_type(){
+		return static_cast<std::uniform_int_distribution<ll>::param_type>(min_, max_);
+	}
+	
 	bool operator !=(Range<_Ty> x){
 		return min_ != x.max_ || min_ != x.min_;
 	}
