@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Range.h"
-#include <random>
 #include <chrono>
+
+//UNDONE: No error was reported in the illegal situation
 
 template <class _Ty = ll>
 class _Ret{
@@ -27,6 +28,7 @@ public:
 	explicit _Ret(char v = char()) :value_(v) {};
 	explicit _Ret(std::string v) :string_value_(v) {};
 	explicit _Ret(std::vector<std::string> v) :string_array_value_(v) {};
+	explicit _Ret(std::uniform_int_distribution<ll>::result_type r) :value_(static_cast<char>(r)) {};
 
 	operator char () const { return value_; }
 	operator std::string () const { return string_value_; }
@@ -60,13 +62,13 @@ public:
 	//UNDONE: avoid uniform_int_distribution range is char type
 	
 	_Ret<_Ty> _get_random_data(Range<>range) {
-		u_.param(static_cast<Range<ll>>(data_range_));
-		return u_(engine_);
+		u_.param(range);
+		return static_cast<_Ret<_Ty>>(u_(engine_));
 	}
 	//if parameter is empty,use data_range_
 	_Ret<_Ty> _get_random_data() {
-		u_.param(static_cast<Range<ll>>(data_range_));
-		return u_(engine_);
+		u_.param(data_range_);
+		return static_cast<_Ret<_Ty>>(u_(engine_));
 	}
 	
 private:
@@ -75,15 +77,50 @@ private:
 	std::uniform_int_distribution<_Ty> u_;
 };
 
-//UNDONE: No error was reported in the illegal situation
+template<>
+class _Base<char>{
+public:
+	_Base(Range<>data_range = Range<>())
+		:data_range_(data_range),engine_((std::chrono::high_resolution_clock::now().time_since_epoch()).count()) {}
+	
+	Range<char> get_data_range_() const { return data_range_; }
+	std::default_random_engine get_engine_() const { return engine_; }
+	
+	void set_data_range_(const Range<char>& data_range) { data_range_ = data_range; }
+	void set_engine(const std::default_random_engine& engine) { engine_ = engine; }
+	void set_engine(const std::default_random_engine::result_type& X) { engine_.seed(X); }
+
+	
+	_Ret<char> get_data() { return _get_random_data(); }
+
+	//get a random data
+	//UNDONE: avoid uniform_int_distribution range is char type
+	
+	_Ret<char> _get_random_data(Range<>range) {
+		u_.param(range);
+		return static_cast<_Ret<char>>(u_(engine_));
+	}
+	//if parameter is empty,use data_range_
+	_Ret<char> _get_random_data() {
+		u_.param(data_range_);
+		return static_cast<_Ret<char>>(u_(engine_));
+	}
+	
+private:
+	Range<char> data_range_;
+	std::default_random_engine engine_; 
+	std::uniform_int_distribution<ll> u_;
+};
+
 template<class _Ty = ll>
 class DataGenerator : public _Base<_Ty> {
 	
 public:
 	
-	
 	DataGenerator(Range<> data_range = Range<>(), Range<> data_row_range = Range<>(1, 1), Range<> data_col_range = Range<>(1, 1)) :
-		_Base(static_cast<Range<int> >(data_range)), data_row_range_(data_row_range), data_col_range_(data_col_range){}
+		data_row_range_(data_row_range), data_col_range_(data_col_range){
+		this->set_data_range_(data_range);
+	}
 
 	Range<> get_data_row_range_() const { return data_row_range_; }
 	Range<> get_data_col_range_() const { return data_col_range_; }
@@ -100,18 +137,18 @@ private:
 	Range<> data_row_range_;
 	Range<> data_col_range_;
 	
-	std::vector<std::vector<_Ty> >_get_two_dimension_data(){
+	_Ret<_Ty> _get_two_dimension_data(){
 		std::vector<std::vector<_Ty> > ret;
 		int row_number = _Base<>::_get_random_data(data_row_range_);
 		while (row_number--)ret.push_back(_get_a_row_data());
-		return ret;
+		return static_cast<_Ret<_Ty>>(ret);
 	}
 	
-	std::vector<_Ty>_get_a_row_data(){
+	_Ret<_Ty> _get_a_row_data(){
 		std::vector<_Ty> ret;
 		int col_number = _Base<>::_get_random_data(data_col_range_);
 		while (col_number--)ret.push_back(_Base<>::_get_random_data());
-		return ret;
+		return static_cast<_Ret<_Ty>>(ret);
 	}
 };
 
