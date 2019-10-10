@@ -12,13 +12,14 @@ int main() {
 	cout << "=================================================" << endl;
 	
 	DataGenerator<ll> random_number;
+	random_number.set_data_range_(Range<>(0, 100));
 	
 	cout << "A random number: " << random_number.get_data() << endl;
 	
 	cout << "An array random number:" << endl;
 	random_number.set_data_col_range_(Range<>(20, 50));
 	vector <ll> arr1 = random_number.get_data();
-	for(vector<ll>::iterator vit=arr1.begin();vit!=arr1.end();vit++){
+	for(vector<ll>::iterator vit=arr1.begin();vit!=arr1.end();++vit){
 		cout << *vit << ' ';
 	}
 	cout << endl;
@@ -26,8 +27,8 @@ int main() {
 	cout << "A two-dimension random number:" << endl;
 	random_number.set_data_row_range_(random_number.get_data_col_range_());
 	vector <vector<ll>>arr2 = random_number.get_data();
-	for(vector<vector<ll>>::iterator vit=arr2.begin();vit!=arr2.end();vit++){
-		for(vector<ll>::iterator vit2=vit->begin();vit2!=vit->end();vit++){
+	for(vector<vector<ll>>::iterator vit=arr2.begin();vit!=arr2.end();++vit){
+		for(vector<ll>::iterator vit2=vit->begin();vit2!=vit->end();++vit){
 			cout << *vit2 << ' ';
 		}
 		cout << endl;
@@ -50,6 +51,6 @@ int main() {
 	for(vector<string>::iterator vit=arr3.begin();vit!=arr3.end();vit++){
 		cout << *vit << endl;
 	}
-	
+
 	return 0;
 }
