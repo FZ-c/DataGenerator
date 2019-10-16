@@ -25,10 +25,15 @@ int main() {
 	cout << endl;
 
 	cout << "A two-dimension random number:" << endl;
-	random_number.set_data_row_range_(random_number.get_data_col_range_());
+	random_number.set_data_row_range_(
+		Range<>(random_number.get_data_col_range_().get_max_(), random_number.get_data_col_range_().get_max_())
+	);
+	random_number.set_data_col_range_(
+		Range<>(random_number.get_data_row_range_().get_max_(), random_number.get_data_row_range_().get_max_())
+	);
 	vector <vector<ll>>arr2 = random_number.get_data();
 	for(vector<vector<ll>>::iterator vit=arr2.begin();vit!=arr2.end();++vit){
-		for(vector<ll>::iterator vit2=vit->begin();vit2!=vit->end();++vit){
+		for(vector<ll>::iterator vit2=vit->begin();vit2!=vit->end();++vit2){
 			cout << *vit2 << ' ';
 		}
 		cout << endl;
