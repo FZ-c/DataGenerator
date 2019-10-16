@@ -21,12 +21,18 @@
     <ClCompile Include="Range.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ReturnType.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Range.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="DataGenerator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ReturnType.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
