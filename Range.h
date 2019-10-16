@@ -28,7 +28,7 @@ public:
 	}
 
 	operator std::uniform_int_distribution<ll>::param_type(){
-		return static_cast<std::uniform_int_distribution<ll>::param_type>(min_, max_);
+		return std::uniform_int_distribution<ll>::param_type{ min_, max_ };
 	}
 	
 	bool operator !=(Range<_Ty> x){
