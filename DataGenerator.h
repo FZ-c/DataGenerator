@@ -1,46 +1,10 @@
 #pragma once
 
 #include "Range.h"
+#include "ReturnType.h"
 #include <chrono>
 
 //UNDONE: No error was reported in the illegal situation
-
-template <class _Ty = ll>
-class _Ret{
-public:
-	explicit _Ret(_Ty v = _Ty()) :value_(v) {}
-	explicit _Ret(std::vector<_Ty> v) :array_value_(v) {};
-	explicit _Ret(std::vector<std::vector<_Ty>>v) :two_dimension_value_(v) {};
-
-	operator _Ty () { return value_; }
-	operator std::vector<_Ty> () { return array_value_; }
-	operator std::vector<std::vector<_Ty>>() { return two_dimension_value_; }
-	
-private:
-	_Ty value_ = _Ty();
-	std::vector<_Ty> array_value_;
-	std::vector < std::vector<_Ty> >two_dimension_value_;
-};
-
-template <>
-class _Ret<char>{
-public:
-	explicit _Ret(char v = char()) :value_(v) {};
-	explicit _Ret(std::string v) :string_value_(v) {};
-	explicit _Ret(std::vector<std::string> v) :string_array_value_(v) {};
-	explicit _Ret(std::uniform_int_distribution<ll>::result_type r) :value_(static_cast<char>(r)) {};
-
-	operator char () const { return value_; }
-	operator std::string () const { return string_value_; }
-	operator std::vector<std::string>() const { return string_array_value_; }
-
-
-private:
-	char value_{};
-	std::string string_value_;
-	std::vector <std::string>string_array_value_;
-};
-
 
 template<class _Ty = ll>
 class _Base{
@@ -53,7 +17,7 @@ public:
 	
 	void set_data_range_(const Range<_Ty>& data_range) { data_range_ = data_range; }
 	void set_engine(const std::default_random_engine& engine) { engine_ = engine; }
-	void set_engine(const std::default_random_engine::result_type& X) { engine_.seed(X); }
+	void set_engine(const std::default_random_engine::result_type& rt) { engine_.seed(rt); }
 
 	
 	_Ret<_Ty> get_data() { return _get_random_data(); }
