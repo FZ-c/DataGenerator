@@ -50,12 +50,23 @@ int main() {
 
 	random_string.set_data_length_range_(Range<>(10, 30));
 	cout << "A random string(lowercase): " << random_string.get_data() << endl;
-
+	
+	cout << "An random string array:" << endl;
 	random_string.set_string_number_range_(random_string.get_data_length_range_());
 	vector<string> arr3 = random_string.get_data();
 	for(vector<string>::iterator vit=arr3.begin();vit!=arr3.end();vit++){
 		cout << *vit << endl;
 	}
 
+	random_string.set_data_length_range_(Range<>(10, 30));
+	cout << "A random string(lowercase add space): " << random_string.get_data(true) << endl;
+	
+	cout << "An random string array:(add space)" << endl;
+	random_string.set_string_number_range_(random_string.get_data_length_range_());
+	vector<string> arr4 = random_string.get_data(true);
+	for(vector<string>::iterator vit=arr4.begin();vit!=arr4.end();vit++){
+		cout << *vit << endl;
+	}
+	
 	return 0;
 }
