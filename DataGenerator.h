@@ -122,7 +122,6 @@ class DataGenerator<char> :public _Base<char>
 {
 public:
 	
-	
 	DataGenerator(Range<char> data_range=Range<char>('a','z'), Range<> data_length_range = Range<>(1, 1), Range<> data_string_number_range = Range<>(1, 1)) :
 		_Base(data_range), data_length_range_(data_length_range),data_string_number_range_(data_string_number_range){}
 
@@ -131,28 +130,39 @@ public:
 	void set_data_length_range_(const Range<>& data_length_range) { data_length_range_ = data_length_range; }
 	void set_string_number_range_(const Range<>& data_string_number_range) { data_string_number_range_ = data_string_number_range; }
 
-	_Ret<char> get_data(){
-		if (data_string_number_range_ != Range<>(1, 1)) return _get_a_row_string();
-		if (data_length_range_ != Range<>(1, 1)) return _get_string();
+	_Ret<char> get_data(bool add_space = false) {
+		if (data_string_number_range_ != Range<>(1, 1)) return _get_a_row_string(add_space);
+		if (data_length_range_ != Range<>(1, 1)) return _get_string(add_space);
 		return _get_random_data();
-	}
-	//get a random vector about string(same as two-dimensional array)
-	_Ret<char> _get_a_row_string(){
-		std::vector<std::string> ret;
-		int string_number = _get_random_data(data_string_number_range_);
-		while (string_number--)ret.push_back(_get_string());
-		return static_cast<_Ret<char>>(ret);
-	}
-	
-	//get a random string(same as one-dimensional array)
-	_Ret<char> _get_string(){
-		std::string ret;
-		int string_len = _get_random_data(data_length_range_);
-		while (string_len--)ret.push_back(_get_random_data());
-		return static_cast<_Ret<char>>(ret);
 	}
 	
 private:
 	Range<> data_length_range_;
 	Range<> data_string_number_range_;
+	
+	//get a random vector about string(same as two-dimensional array)
+	_Ret<char> _get_a_row_string(bool add_space = false) {
+		std::vector<std::string> ret;
+		int string_number = _get_random_data(data_string_number_range_);
+		while (string_number--)ret.push_back(_get_string(add_space));
+		return static_cast<_Ret<char>>(ret);
+	}
+	
+	//get a random string(same as one-dimensional array)
+	_Ret<char> _get_string(bool add_space = false) {
+		std::string ret;
+		int string_len = _get_random_data(data_length_range_);
+		if (add_space)
+			set_data_range_(Range<>(get_data_range_().get_min_(), get_data_range_().get_max_() + 1));
+		for (int i = 0; i < string_len; i++)
+			ret.push_back(_get_random_data());
+		if(add_space){
+			for (int i = 0; i < string_len; i++) {
+				if (ret[i] == get_data_range_().get_max_())
+					ret[i] = ' ';
+			}
+			set_data_range_(Range<>(get_data_range_().get_min_(), get_data_range_().get_max_() - 1));
+		}
+		return static_cast<_Ret<char>>(ret);
+	}
 };
