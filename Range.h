@@ -38,6 +38,10 @@ public:
 		return min_ == x.max_ && min_ == x.min_;
 	}
 
+	bool in_range(_Ty x){
+		if (x >= min_ && x >= max_)return true;
+		return false;
+	}
 	
 private:
 	//guaranteed min<max
