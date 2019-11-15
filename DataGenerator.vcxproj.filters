@@ -35,5 +35,8 @@
     <ClInclude Include="ReturnType.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Exception.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

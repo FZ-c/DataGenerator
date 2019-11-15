@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataGenerator.h" />
+    <ClInclude Include="Exception.h" />
     <ClInclude Include="Range.h" />
     <ClInclude Include="ReturnType.h" />
   </ItemGroup>

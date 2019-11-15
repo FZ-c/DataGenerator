@@ -1,7 +1,14 @@
+/**
+ * @author:		FZChen
+ * @version:	v1.0.1-beta
+ * @date:		10/18/2019
+ */
+
 #pragma once
 
 #include <iostream>
 #include <random>
+#include "Exception.h"
 
 typedef long long ll;
 
@@ -12,12 +19,17 @@ public:
 	_Ty max_;
 
 	explicit Range(_Ty min = 0, _Ty max = (std::numeric_limits<_Ty>::max)()) :min_(min), max_(max){
-		_Check();
+//		_Check(min, max);
+		check_(min, max, max, min, "invalid min and max arguments for Range");
 	};
 
 	//UNDONE: after set,if min_>max_ should reported a error rather than swap then
-	void set_min_(_Ty min) { min_ = min; _Check(); }
-	void set_max_(_Ty max) { max_ = max; _Check(); }
+	void set_min_(_Ty min){
+//		_Check(min, max_);
+		check_(min, max_, max_, min, "invalid min and max arguments for Range");
+		min_ = min;
+	}
+	void set_max_(_Ty max) { _Check(min_, max); max_ = max; }
 	_Ty get_min_() { return min_; }
 	_Ty get_max_() { return max_; }
 
@@ -44,8 +56,12 @@ public:
 	}
 	
 private:
-	//guaranteed min<max
-	void _Check(){
-		if (min_ > max_) std::swap(min_, max_);
+	//guaranteed min < max
+	/*
+	static void _Check(_Ty min,_Ty max){
+//		_STL_ASSERT(min_ > max_, "invalid min and max arguments for Range");
+		if (min > max) throw _Exception{ "invalid min and max arguments for Range" };
 	}
+	*/
+	_RangeCheck<_Ty> check_;
 };
