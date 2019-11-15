@@ -152,8 +152,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DataGenerator.cpp" />
-    <ClCompile Include="Range.cpp" />
-    <ClCompile Include="ReturnType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataGenerator.h" />

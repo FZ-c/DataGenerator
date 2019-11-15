@@ -1,7 +1,7 @@
 /**
  * @author:		FZChen
- * @version:	v1.0.1-beta
- * @date:		10/18/2019
+ * @version:	v1.1.0-beta
+ * @date:		11/15/2019
  */
 #pragma once
 
